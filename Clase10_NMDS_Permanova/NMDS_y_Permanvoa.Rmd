@@ -1,0 +1,102 @@
+---
+title: "NMDS y Permanova"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+Cargar paquete
+```{r}
+library(vegan)
+```
+
+Cargar base de datos
+```{r}
+Aves <- read.csv("DAves.csv")
+Sitios<- read.csv("Sitios.csv")
+```
+
+Realizar analisis NMDS
+```{r}
+Aves.nmds <- metaMDS(Aves,k=2,trymax=100, distance = "bray")
+```
+
+Generar grafico NMDS
+```{r}
+attach(Sitios)
+
+plot(Aves.nmds, disp="sites", type="n")
+
+#ordihull(Aves.nmds, Sistema, col=1:5, lwd=3)
+
+#ordiellipse(Aves.nmds, Sistema, col=1:5, kind = "ehull", lwd=3)
+
+ordiellipse(Aves.nmds, Sistema, col=1:5, draw="polygon")
+
+ordispider(Aves.nmds, Sistema, col=1:5, label = FALSE)
+
+points(Aves.nmds, disp="sites", pch=21, col="red", bg="yellow", cex=1.3, 
+       label = TRUE)
+
+points(Aves.nmds, disp="species", pch=21, col="blue", bg="gray", cex=1.3)
+```
+
+Realizar permanova
+```{r}
+AvesPermanova <- adonis2(Aves ~ Sistema, 
+                         data= Sitios, permutations = 999, method = "bray")
+
+AvesPermanova
+
+```
+
+
+```{r}
+# Funcion del permanova 
+
+pairwise.adonis <- function(x,factors, sim.function = 'vegdist', sim.method = 'bray', p.adjust.m ='bonferroni')
+{
+  library(vegan)
+  
+  co = combn(unique(as.character(factors)),2)
+  pairs = c()
+  F.Model =c()
+  R2 = c()
+  p.value = c()
+  
+  
+  for(elem in 1:ncol(co)){
+    if(sim.function == 'daisy'){
+      library(cluster); x1 = daisy(x[factors %in% c(co[1,elem],co[2,elem]),],metric=sim.method)
+    } else{x1 = vegdist(x[factors %in% c(co[1,elem],co[2,elem]),],method=sim.method)}
+    
+    ad = adonis(x1 ~ factors[factors %in% c(co[1,elem],co[2,elem])] );
+    pairs = c(pairs,paste(co[1,elem],'vs',co[2,elem]));
+    F.Model =c(F.Model,ad$aov.tab[1,4]);
+    R2 = c(R2,ad$aov.tab[1,5]);
+    p.value = c(p.value,ad$aov.tab[1,6])
+  }
+  p.adjusted = p.adjust(p.value,method=p.adjust.m)
+  sig = c(rep('',length(p.adjusted)))
+  sig[p.adjusted <= 0.05] <-'.'
+  sig[p.adjusted <= 0.01] <-'*'
+  sig[p.adjusted <= 0.001] <-'**'
+  sig[p.adjusted <= 0.0001] <-'***'
+  
+  pairw.res = data.frame(pairs,F.Model,R2,p.value,p.adjusted,sig)
+  print("Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1")
+  return(pairw.res)
+  
+} 
+
+```
+
+Prueba de contraste con Permanova
+```{r}
+Contraste_aves <- pairwise.adonis(Aves, Sitios$Sistema, 
+                                       sim.function = 'vegdist', sim.method = 'bray', p.adjust.m = 'bonferroni')
+
+Contraste_aves
+```
+

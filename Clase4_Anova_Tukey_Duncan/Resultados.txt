@@ -1,0 +1,28 @@
+             Df Sum Sq Mean Sq F value   Pr(>F)    
+year          3  27217    9072   8.893 2.46e-05 ***
+Residuals   112 114264    1020                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+             Df Sum Sq Mean Sq F value   Pr(>F)    
+year          3  27217    9072   8.893 2.46e-05 ***
+Residuals   112 114264    1020                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+package ‘multcompView’ successfully unpacked and MD5 sums checked
+package ‘gmp’ successfully unpacked and MD5 sums checked
+package ‘Rmpfr’ successfully unpacked and MD5 sums checked
+package ‘SuppDists’ successfully unpacked and MD5 sums checked
+package ‘kSamples’ successfully unpacked and MD5 sums checked
+package ‘BWStest’ successfully unpacked and MD5 sums checked
+package ‘mc2d’ successfully unpacked and MD5 sums checked
+package ‘zeallot’ successfully unpacked and MD5 sums checked
+package ‘PMCMRplus’ successfully unpacked and MD5 sums checked
+package ‘WRS2’ successfully unpacked and MD5 sums checked
+package ‘ipmisc’ successfully unpacked and MD5 sums checked
+package ‘pairwiseComparisons’ successfully unpacked and MD5 sums checked
+package ‘paletteer’ successfully unpacked and MD5 sums checked
+package ‘statsExpressions’ successfully unpacked and MD5 sums checked
+package ‘ggstatsplot’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\Pc\AppData\Local\Temp\RtmpWQ3I95\downloaded_packages
